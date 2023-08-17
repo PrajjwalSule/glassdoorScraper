@@ -106,7 +106,7 @@ def DataExtractor(WebsitePage):
     CompanyRatingClass = "pr-xsm ratingsWidget__RatingsWidgetStyles__rating"
     CompanyRating = WebsitePage.find_all('span',{'class':CompanyRatingClass, "data-test":"rating"})
     for rating in CompanyRating:
-        CompanyRatings.append(int(rating.text))
+        CompanyRatings.append(float(rating.text))
 
 
     comapanylocations = []
@@ -116,16 +116,26 @@ def DataExtractor(WebsitePage):
         comapanylocations.append(int(location.text[:3].strip()))
 
 
+    # make a dataframe
+    company_dict = {
+        'Company':CompanyNames,
+        'Size' : CompanySizes,
+        'Industry':CompanyDomains,
+        'Salaries':CompanySalaries,
+        'Jobs' :CompanyJobs,
+        'Rating': CompanyRatings,
+        'Location': comapanylocations,
+        'Review':CompanyReviews
+    }
+
+    CompanyDataFrame = pd.DataFrame(company_dict)
     
-
     
-    return CompanyRatings
+    return CompanyDataFrame
 
 
-
-
-
-
+def CSVMaker(dataframe, filename):
+    dataframe.to_csv(f"{filename}.csv", index=None)
 
 
 
@@ -134,8 +144,7 @@ if __name__ == "__main__":
     url = 'https://www.glassdoor.co.in/Reviews/index.htm'
     webpage, response = WebsitePage(url)
     data = DataExtractor(webpage)
-    print(response)
-    print(data)
+    CSVMaker(data, 'CompaniesData')
 
 
 
