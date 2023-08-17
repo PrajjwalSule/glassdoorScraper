@@ -101,7 +101,16 @@ def DataExtractor(WebsitePage):
         
         companyjobs.append(int(updatedjob))
 
-    return companyjobs
+
+    comapanylocations = []
+    CompanyLocationClass = "d-block mt-0 css-56kyx5"
+    CompanyLocation = WebsitePage.find_all('span', {'class':CompanyLocationClass, "data-test":"employer-location"})
+    for location in CompanyLocation:
+        comapanylocations.append(int(location.text[:3].strip()))
+
+
+
+    return comapanylocations
 
 
 
