@@ -6,6 +6,7 @@ import pandas as pd
 # url = 'https://www.glassdoor.co.in/Reviews/index.htm'
 
 def WebsitePage(url):
+    # This function configure the web page
     headers = {'User-Agent': 'Mozilla/5.0 (Ubuntu; Linux x86_64; Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
     response = requests.get(url, headers=headers)
     if response.status_code < 200 or response.status_code > 299:
@@ -16,6 +17,7 @@ def WebsitePage(url):
 
 
 def DataExtractor(WebsitePage):
+    # This function will extract all the necessary information from configured page.
     CompanyNames = []
     try:
         CompanyNameClass = "align-items-center mb-xsm"
@@ -161,6 +163,7 @@ def DataExtractor(WebsitePage):
 
 
 def CSVMaker(dataframe, filename):
+    # This function will make the dataframe into csv file
     dataframe.to_csv(f"{filename}.csv", index=None)
 
 
@@ -170,6 +173,7 @@ if __name__ == "__main__":
     url = 'https://www.glassdoor.co.in/Reviews/index.htm'
     webpage, response = WebsitePage(url)
     data = DataExtractor(webpage)
+
     CSVMaker(data, 'CompaniesData')
     print(response)
 
