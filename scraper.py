@@ -14,14 +14,34 @@ def WebsitePage(url):
     return webpage, response
 
 
+def DataExtractor(WebsitePage):
+    companynames = []
+    CompanyNameClass = "align-items-center mb-xsm"
+    CompanyName = WebsitePage.find_all('span', {"class":CompanyNameClass})
+    for name in CompanyName:
+        companynames.append(name.text[:-4])
+
+    companysizes = []
+    CompanySizeClass = "d-block mt-0 css-56kyx5"
+    ComapanySize = WebsitePage.find_all('span', {'class':CompanySizeClass, 'data-test':'employer-size'})
+    for size in ComapanySize:
+        companysizes.append(size.text[:-9].strip())
+        
+
+    return companysizes
 
 
 
 
-# if __name__ == "__main__":
-#     url = 'https://www.glassdoor.co.in/Reviews/index.htm'
-#     a,b = topic_page_authentication(url)
-#     print(b)
+
+
+
+if __name__ == "__main__":
+    url = 'https://www.glassdoor.co.in/Reviews/index.htm'
+    webpage, response = WebsitePage(url)
+    data = DataExtractor(webpage)
+    print(response)
+    print(data)
 
 
 
