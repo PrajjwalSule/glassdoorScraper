@@ -16,25 +16,25 @@ def WebsitePage(url):
 
 
 def DataExtractor(WebsitePage):
-    companynames = []
+    CompanyNames = []
     CompanyNameClass = "align-items-center mb-xsm"
     CompanyName = WebsitePage.find_all('span', {"class":CompanyNameClass})
     for name in CompanyName:
-        companynames.append(name.text[:-4])
+        CompanyNames.append(name.text[:-4])
 
-    companysizes = []
+    CompanySizes = []
     CompanySizeClass = "d-block mt-0 css-56kyx5"
     ComapanySize = WebsitePage.find_all('span', {'class':CompanySizeClass, 'data-test':'employer-size'})
     for size in ComapanySize:
-        companysizes.append(size.text[:-9].strip())
+        CompanySizes.append(size.text[:-9].strip())
 
-    companydomains = []
+    CompanyDomains = []
     CompanyIndustryClass = "d-block mt-0 css-56kyx5"
     CompanyIndustry = WebsitePage.find_all('span', {'class':CompanyIndustryClass, "data-test":"employer-industry"})
     for domain in CompanyIndustry:
-        companydomains.append(domain.text)
+        CompanyDomains.append(domain.text)
 
-    companyreviews = []
+    CompanyReviews = []
     CompanyReviewClass = "mt-xsm mt-md-0"
     CompanyReview = WebsitePage.find_all('h3',{'class':CompanyReviewClass, "data-test":"cell-Reviews-count"})
     for review in CompanyReview:
@@ -53,10 +53,10 @@ def DataExtractor(WebsitePage):
         else:
             updatedreview = float(review.text)
 
-        companyreviews.append(int(updatedreview))
+        CompanyReviews.append(int(updatedreview))
 
     
-    companysalaries = []
+    CompanySalaries = []
     CompanySalaryClass = "mt-xsm mt-md-0"
     CompanySalary = WebsitePage.find_all('h3', {'class':CompanySalaryClass, 'data-test':"cell-Salaries-count"})
     for salary in CompanySalary:
@@ -76,10 +76,10 @@ def DataExtractor(WebsitePage):
             updatedsalary = float(salary.text)
 
 
-        companysalaries.append(int(updatedsalary))
+        CompanySalaries.append(int(updatedsalary))
 
 
-    companyjobs = []
+    CompanyJobs = []
     CompanyJobClass = "mt-xsm mt-md-0"
     CompanyJob = WebsitePage.find_all('h3', {'class':CompanyJobClass, "data-test":"cell-Jobs-count"})
     for job in CompanyJob:
@@ -99,7 +99,14 @@ def DataExtractor(WebsitePage):
             updatedjob = float(job.text)
 
         
-        companyjobs.append(int(updatedjob))
+        CompanyJobs.append(int(updatedjob))
+
+
+    CompanyRatings = []
+    CompanyRatingClass = "pr-xsm ratingsWidget__RatingsWidgetStyles__rating"
+    CompanyRating = WebsitePage.find_all('span',{'class':CompanyRatingClass, "data-test":"rating"})
+    for rating in CompanyRating:
+        CompanyRatings.append(int(rating.text))
 
 
     comapanylocations = []
@@ -109,8 +116,10 @@ def DataExtractor(WebsitePage):
         comapanylocations.append(int(location.text[:3].strip()))
 
 
+    
 
-    return comapanylocations
+    
+    return CompanyRatings
 
 
 
