@@ -28,15 +28,45 @@ def DataExtractor(WebsitePage):
     for size in ComapanySize:
         companysizes.append(size.text[:-9].strip())
 
-    domains = []
+    companydomains = []
     CompanyIndustryClass = "d-block mt-0 css-56kyx5"
     CompanyIndustry = WebsitePage.find_all('span', {'class':CompanyIndustryClass, "data-test":"employer-industry"})
     for domain in CompanyIndustry:
-        domains.append(domain.text)
+        companydomains.append(domain.text)
 
-        
+    companyreviews = []
+    CompanyReviewClass = "mt-xsm mt-md-0"
+    CompanyReview = WebsitePage.find_all('h3',{'class':CompanyReviewClass, "data-test":"cell-Reviews-count"})
+    for review in CompanyReview:
+        if review.text[-1] == "L":
+            newreview = review.text[::-1]
+            newreview = float(newreview[1:])
+            updatedreview = newreview * 1000000
+        elif review.text[-1] == "T":
+            newreview = review.text[::-1]
+            newreview = float(newreview[1:])
+            updatedreview = newreview * 1000
 
-    return domains
+        companyreviews.append(int(updatedreview))
+
+    
+    companysalaries = []
+    CompanySalaryClass = "mt-xsm mt-md-0"
+    CompanySalary = WebsitePage.find_all('h3', {'class':CompanySalaryClass, 'data-test':"cell-Salaries-count"})
+    for salary in CompanySalary:
+        if salary.text[-1] == "L":
+            newsalary = salary.text[::-1]
+            newsalary = float(newsalary[1:])
+            updatedsalary = newsalary * 1000000
+        elif salary.text[-1] == "T":
+            newsalary = salary.text[::-1]
+            newsalary = float(newsalary[1:])
+            updatedsalary = newsalary * 1000
+
+        companysalaries.append(int(updatedsalary))
+
+    return companysalaries
+
 
 
 
