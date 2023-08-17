@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
+import pandas as pd
 
 
 # url = 'https://www.glassdoor.co.in/Reviews/index.htm'
@@ -26,9 +27,16 @@ def DataExtractor(WebsitePage):
     ComapanySize = WebsitePage.find_all('span', {'class':CompanySizeClass, 'data-test':'employer-size'})
     for size in ComapanySize:
         companysizes.append(size.text[:-9].strip())
+
+    domains = []
+    CompanyIndustryClass = "d-block mt-0 css-56kyx5"
+    CompanyIndustry = WebsitePage.find_all('span', {'class':CompanyIndustryClass, "data-test":"employer-industry"})
+    for domain in CompanyIndustry:
+        domains.append(domain.text)
+
         
 
-    return companysizes
+    return domains
 
 
 
