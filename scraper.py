@@ -40,12 +40,18 @@ def DataExtractor(WebsitePage):
     for review in CompanyReview:
         if review.text[-1] == "L":
             newreview = review.text[::-1]
-            newreview = float(newreview[1:])
+            newreview = newreview[1:]
+            newreview = float(newreview[::-1])
             updatedreview = newreview * 1000000
+
         elif review.text[-1] == "T":
             newreview = review.text[::-1]
-            newreview = float(newreview[1:])
+            newreview = newreview[1:]
+            newreview = float(newreview[::-1])
             updatedreview = newreview * 1000
+
+        else:
+            updatedreview = float(review.text)
 
         companyreviews.append(int(updatedreview))
 
@@ -56,16 +62,48 @@ def DataExtractor(WebsitePage):
     for salary in CompanySalary:
         if salary.text[-1] == "L":
             newsalary = salary.text[::-1]
-            newsalary = float(newsalary[1:])
+            newsalary = newsalary[1:]
+            newsalary = float(newsalary[::-1])
             updatedsalary = newsalary * 1000000
+
         elif salary.text[-1] == "T":
             newsalary = salary.text[::-1]
-            newsalary = float(newsalary[1:])
+            newsalary = newsalary[1:]
+            newsalary = float(newsalary[::-1])
             updatedsalary = newsalary * 1000
+
+        else:
+            updatedsalary = float(salary.text)
+
 
         companysalaries.append(int(updatedsalary))
 
-    return companysalaries
+
+    companyjobs = []
+    CompanyJobClass = "mt-xsm mt-md-0"
+    CompanyJob = WebsitePage.find_all('h3', {'class':CompanyJobClass, "data-test":"cell-Jobs-count"})
+    for job in CompanyJob:
+        if job.text[-1] == "L":
+            newjob = job.text[::-1]
+            newjob = newjob[1:]
+            newjob = float(newjob[::-1])
+            updatedjob = newjob * 100000
+
+        elif job.text[-1] == "T":
+            newjob = job.text[::-1]
+            newjob = newjob[1:]
+            newjob = float(newjob[::-1])
+            updatedjob = newjob * 1000
+
+        else:
+            updatedjob = float(job.text)
+
+        
+        companyjobs.append(int(updatedjob))
+
+    return companyjobs
+
+
 
 
 
