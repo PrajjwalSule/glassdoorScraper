@@ -3,8 +3,6 @@ import requests
 import pandas as pd
 
 
-# url = 'https://www.glassdoor.co.in/Reviews/index.htm'
-
 def WebsitePage(url):
     # This function configure the web page
     headers = {'User-Agent': 'Mozilla/5.0 (Ubuntu; Linux x86_64; Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
